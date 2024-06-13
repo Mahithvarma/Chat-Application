@@ -40,7 +40,7 @@ function ChatInput({handleSendmsg}) {
           {showemojipicker && <Picker className="picker" onEmojiClick={handleEmojiClick}/>}
         </div>
       </div>
-      <form className="input-container" onSubmit={handleSendmsg}>
+      <form className="input-container" onSubmit={sendChat}>
         <input type="text" placeholder="Type a message" value={msg} onChange={handleChangeMsg}/>
         <button type="submit">
           <IoMdSend onClick={sendChat}/>
@@ -51,18 +51,16 @@ function ChatInput({handleSendmsg}) {
 }
 
 const Container = styled.div`
-  position: absolute;
-  bottom: 85px;
   display: grid;
-  width: 538px;
   grid-template-columns: 10% 90%;
+  background-color: white;
+  border-radius: 10px;
   .button-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #7f7f78;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
     .emoji{
       align-items: center;
       margin: 0 auto;
@@ -92,10 +90,10 @@ const Container = styled.div`
     }
   }
   .input-container{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 90% 10%;
     input{
-      width: 90%;
+      width: 100%;
       padding: 10px;
       border: none;
       outline: none;
@@ -103,7 +101,7 @@ const Container = styled.div`
     }
     button{
       background-color: #2e2e2e;
-      width: 10%;
+      width: 100%;
       color: white;
       border: none;
       cursor: pointer;
@@ -121,5 +119,77 @@ const Container = styled.div`
     }
   }
 `;
+
+// const Container = styled.div`
+//   position: absolute;
+//   bottom: 85px;
+//   display: grid;
+//   width: 538px;
+//   grid-template-columns: 10% 90%;
+//   .button-container{
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     background-color: #7f7f78;
+//     border-top-left-radius: 10px;
+//     border-bottom-left-radius: 10px;
+//     .emoji{
+//       align-items: center;
+//       margin: 0 auto;
+//       color: #e9e9e9;
+//       height: inherit;
+//       cursor: pointer;
+//       .smile-emoji{
+//         height: 25px;
+//         width: 25px;
+//       }
+//       .picker {
+//         top: 285px;
+//         position: absolute;
+//         background-color: #7f7f78;
+//         border-top-left-radius: 10px;
+//         border-bottom-left-radius: 10px;
+//         height: 300px !important;
+//         width: 250px !important;
+//         background: white !important;
+        
+//       }
+//       transition: all 0.3s ease;
+//       &:hover{
+//         color: #e9e9e9bb;
+//         transition: all 0.3s ease;
+//       }
+//     }
+//   }
+//   .input-container{
+//     display: flex;
+//     flex-direction: row;
+//     input{
+//       width: 90%;
+//       padding: 10px;
+//       border: none;
+//       outline: none;
+//       font-size: 15px;
+//     }
+//     button{
+//       background-color: #2e2e2e;
+//       width: 10%;
+//       color: white;
+//       border: none;
+//       cursor: pointer;
+//       transition: all 0.3s ease;
+//       &:hover{
+//         background-color: #4e4e4e;
+//         transition: all 0.3s ease;
+//       }
+//       border-top-right-radius: 10px;
+//       /* border-bottom-right-radius: 10px; */
+//       > *{
+//         height: 20px;
+//         width: 20px;
+//       }
+//     }
+//   }
+// `;
 
 export default ChatInput;

@@ -11,7 +11,7 @@ import Welcome from '../components/welcome';
 import ChatContainer from '../components/ChatContainer';
 import ChatInput from '../components/ChatInput';
 import {getCookie, deleteCookie} from '../commonFuncs/Cookies.js';
-import '../styles/chatbox.css';
+// import '../styles/chatbox.css';
 
 function Chat() {
     const navigate = useNavigate();
@@ -65,12 +65,7 @@ function Chat() {
 
     const handleChangeUser = (contact) =>{
       setselectedUser(contact);
-      console.log("selected user: ", selectedUser);
-      console.log("Current user: ", currentUser);
     }
-    useEffect(() => {
-      console.log("The selected user is:", selectedUser);
-    }, [selectedUser]);
 
     const handleSignout = () =>{
       sessionStorage.removeItem("Chat-app-user");
