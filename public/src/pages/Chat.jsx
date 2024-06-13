@@ -63,10 +63,14 @@ function Chat() {
     }, [currentUser]);
 
 
-    const handleChangeUser = (user) =>{
-      setselectedUser(user);
-      console.log(selectedUser);
+    const handleChangeUser = (contact) =>{
+      setselectedUser(contact);
+      console.log("selected user: ", selectedUser);
+      console.log("Current user: ", currentUser);
     }
+    useEffect(() => {
+      console.log("The selected user is:", selectedUser);
+    }, [selectedUser]);
 
     const handleSignout = () =>{
       sessionStorage.removeItem("Chat-app-user");
@@ -83,8 +87,8 @@ function Chat() {
           </div>
           <div className="users">
             <ul>
-              {allusers.map(user => (
-                <li key={user._id} onClick={()=>handleChangeUser(user)} className={(selectedUser === user)?`selected`:``}>{user.username}</li>
+              {allusers.map((contact) => (
+                <li key={contact._id} onClick={()=>handleChangeUser(contact)} className={(selectedUser === contact)?`selected`:``}>{contact.username}</li>
               ))}
             </ul>
           </div>

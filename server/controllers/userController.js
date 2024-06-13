@@ -17,6 +17,7 @@ module.exports.register = async (req, res, next) => {
       password: hashedPassword,
     });
     let resUser = {
+      _id: user._id,
       email: user.email,
       username: user.username
     };
@@ -40,6 +41,7 @@ module.exports.login = async (req, res, next) => {
     
     // res.cookie("Chat-app-user", JSON.stringify(user), {httpOnly: false});
     let resUser = {
+      _id: user._id,
       email: user.email,
       username: user.username
     };

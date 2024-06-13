@@ -2,8 +2,20 @@ import React from "react";
 import Welcome from "./welcome";
 import styled from "styled-components";
 import ChatInput from "../components/ChatInput";
+import {sendMessageRoute, getAllMsgsRoute } from "../utils/APIRoutes";
+import axios from "axios";
+
 function ChatContainer({ selectedUser, currentUser }) {
   
+  const handleSendmsg = async (msg) => {
+    await axios.post(sendMessageRoute, {
+      from: currentUser._id,
+      to: selectedUser._id,
+      message: msg,
+    });
+    
+  };
+
   return (
     <Container>
       <div className="header">
@@ -30,7 +42,7 @@ function ChatContainer({ selectedUser, currentUser }) {
         </div>
       ) : null} */}
       {
-        selectedUser && <ChatInput className="inputbar"/>
+        selectedUser && <ChatInput handleSendmsg={handleSendmsg} className="inputbar"/>
       }
     </Container>
   );
