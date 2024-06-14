@@ -35,7 +35,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://chat-app-4hhu.onrender.com",
         credentials: true,
     },
 });
