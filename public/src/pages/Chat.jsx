@@ -29,6 +29,7 @@ function Chat() {
         
       }
       fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   
@@ -66,6 +67,7 @@ function Chat() {
         }
       }
       fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentUser]);
 
 

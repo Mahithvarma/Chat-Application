@@ -31,6 +31,7 @@ function ChatContainer({ selectedUser, currentUser, socket }) {
         setArrivalMessage({ fromSelf: false, message: msg });
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
