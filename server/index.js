@@ -5,6 +5,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const messageRoutes = require("./routes/messageRoutes.js");
 const cookieParser = require("cookie-parser");
 const socket = require("socket.io");
+const port = process.env.PORT;
 
 const app = express();
 require("dotenv").config();
@@ -28,8 +29,8 @@ mongoose
         console.log(err.message);
     });
 
-const server = app.listen(process.env.PORT, () => {
-    console.log(`Server Started on port ${process.env.PORT}`);
+const server = app.listen(port, () => {
+    console.log(`Server Started on port ${port}`);
 });
 
 const io = socket(server, {
