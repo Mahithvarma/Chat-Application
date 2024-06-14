@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Welcome from "./welcome";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "../components/ChatInput";
 import { toast } from "react-toastify";
 import { sendMessageRoute, getAllMsgsRoute } from "../utils/APIRoutes";
+import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-function ChatContainer({ selectedUser, currentUser }) {
+function ChatContainer({ selectedUser, currentUser, socket }) {
   const [messages, setmessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const scrollRef = useRef();
 
   useEffect(() => {
     async function fetchData() {
@@ -23,12 +25,40 @@ function ChatContainer({ selectedUser, currentUser }) {
     fetchData();
   }, [selectedUser, currentUser._id]);
 
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && setmessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+
   const handleSendmsg = async (msg) => {
+
+    socket.current.emit("send-msg", {
+      to: selectedUser._id,
+      from: currentUser._id,
+      message: msg,
+    });
+
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: selectedUser._id,
       message: msg,
     });
+
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setmessages(msgs);
   };
 
   return (
@@ -41,7 +71,7 @@ function ChatContainer({ selectedUser, currentUser }) {
           <div className="chat-messages">
             {messages.map((message) => {
               return (
-                <div>
+                <div ref={scrollRef} key={uuidv4()}>
                   <div
                     className={`message ${
                       message.fromSelf ? "sended" : "recieved"

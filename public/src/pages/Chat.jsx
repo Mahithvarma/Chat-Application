@@ -1,24 +1,23 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useRef} from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
-import { Link, useNavigate} from 'react-router-dom';
-import { allUsersRoute } from '../utils/APIRoutes';
+import { useNavigate} from 'react-router-dom';
+import { allUsersRoute, host } from '../utils/APIRoutes';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import attachlogo from '../images/attach_logo.png';
 import backgroundImage from '../images/background.jpg';
 import Welcome from '../components/welcome';
 import ChatContainer from '../components/ChatContainer';
-import ChatInput from '../components/ChatInput';
-import {getCookie, deleteCookie} from '../commonFuncs/Cookies.js';
+import { io } from "socket.io-client";
 // import '../styles/chatbox.css';
 
 function Chat() {
+    const socket = useRef();
     const navigate = useNavigate();
     const [currentUser, setcurrentUser] = useState(undefined);
     const [allusers, setallusers] = useState([]);
     const [selectedUser, setselectedUser] = useState(undefined);
-    const [currentChat, setcurrentChat] = useState(undefined);
+    // const [currentChat, setcurrentChat] = useState(undefined);
     useEffect(() => {
       async function fetchData() {
         if (!sessionStorage.getItem("Chat-app-user")) {
@@ -46,6 +45,12 @@ function Chat() {
       draggable: true,
       progress: undefined,
   };
+  useEffect(() => {
+    if (currentUser) {
+      socket.current = io(host);
+      socket.current.emit("add-user", currentUser._id);
+    }
+  }, [currentUser]);
 
     useEffect(() => {
       async function fetchData() {
@@ -53,6 +58,7 @@ function Chat() {
           if(currentUser){
             const response = await axios.get(`${allUsersRoute}/${currentUser._id}`);
             setallusers(response.data);
+            // console.log("Response data is: ",response.data);
           }
         }
         catch(err){
@@ -92,7 +98,7 @@ function Chat() {
           
 
           {
-            selectedUser ? (<ChatContainer selectedUser={selectedUser} currentUser={currentUser} />):(<Welcome />)
+            selectedUser ? (<ChatContainer selectedUser={selectedUser} currentUser={currentUser} socket={socket} />):(<Welcome />)
           }
           {/* <ChatContainer selectedUser={selectedUser} currentUser={currentUser} /> */}
           {/* <div className="header">

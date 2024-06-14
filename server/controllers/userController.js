@@ -56,7 +56,15 @@ module.exports.getAllUsers = async (req, res, next) => {
     const users = await User.find();
     const currUserid = req.params.id;
     const allusers = users.filter((user) => user._id.toString() !== currUserid);
-    return res.json(allusers);
+    const resUsers = allusers.map((user)=>{
+      return {
+        _id: user._id,
+        email: user.email,
+        username: user.username
+      }
+    });
+
+    return res.json(resUsers);
     // return res.json(users);
   } catch (err) {
     next(err);
