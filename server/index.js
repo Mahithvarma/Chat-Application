@@ -13,6 +13,7 @@ require("dotenv").config();
 app.use(cors({
   origin: 'https://chat-app-frontend-beryl.vercel.app',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
   credentials: true
 }));
 app.use(express.json());
