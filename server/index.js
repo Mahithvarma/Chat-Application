@@ -35,7 +35,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
     cors: {
-        origin: "https://chat-app-4hhu.onrender.com",
+        origin: "https://chat-app-frontend-beryl.vercel.app",
         credentials: true,
     },
 });
