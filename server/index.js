@@ -11,7 +11,7 @@ const app = express();
 require("dotenv").config();
 
 app.use(cors({
-  origin: "*",
+  origin: "https://chat-app-frontend-blond.vercel.app",
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Origin',
   credentials: true
@@ -44,7 +44,7 @@ const server = app.listen(port, () => {
 
 const io = socket(server, {
     cors: {
-        origin: "*",
+        origin: "https://chat-app-frontend-blond.vercel.app",
         credentials: true,
     },
 });
