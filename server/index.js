@@ -6,16 +6,19 @@ const messageRoutes = require("./routes/messageRoutes.js");
 const cookieParser = require("cookie-parser");
 const socket = require("socket.io");
 const port = process.env.PORT;
+const mongo_url = "mongodb+srv://mahith:mahith123@cluster1.slnvpup.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1";
 
 const app = express();
 require("dotenv").config();
 
-app.use(cors({
-  origin: "*",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Origin',
-  credentials: true
-}));
+app.use(cors());
+// {
+//   origin: "*",
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Origin',
+//   credentials: true
+// }
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -27,7 +30,7 @@ app.use("/api/auth", userRoutes);
 app.use("/api/messages", messageRoutes);
 
 mongoose
-    .connect(process.env.MONGO_URL, {
+    .connect(mongo_url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
